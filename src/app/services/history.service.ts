@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
+let domainName = 'https://api.sentimint.jamals.me/';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
 
   // private historyUrl = 'https://jamalsaied.net:8888/all_queries?uid=DaXKIgYZgNWDATuUBx4mUkt6dQp2';
-  private historyUrl = 'https://jamalsaied.net:8888/all_queries?uid=';
+  private historyUrl = domainName + 'all_queries?uid=';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

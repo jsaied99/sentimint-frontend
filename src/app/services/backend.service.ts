@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-
+let domainName = 'https://api.sentimint.jamals.me/';
 @Injectable({
   providedIn: 'root'
 })
+
 export class BackendService {
 
   constructor(private http: HttpClient) { }
@@ -13,13 +14,13 @@ export class BackendService {
   public getHistory(){
 
       return this.http.get(
-        'https://jamalsaied.net:8888/all_queries'
+        domainName + 'all_queries'
       );
   }
 
   public getSentimentAnalysis(uid: string, hashtag: string, limit: number){
 
-    const url = 'https://jamalsaied.net:8888/twitter_api';
+    const url = domainName + 'twitter_api';
     return this.http.post(url, {uid: uid, topic: hashtag, limit: limit});
   }
 }
