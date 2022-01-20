@@ -13,7 +13,10 @@ export interface tweet_data{
 
 export interface api_response{
   texts: tweet_data[],
-  topic: string
+  topic: string,
+  average_sentiment: number,
+  average_sentiment_interpretation: string,
+  average_tweet_length: number,
 }
 
 export interface response{
@@ -35,8 +38,9 @@ export class HistoryComponent implements OnInit {
   loading: boolean = true;
   index: number = 0;
   started = false;
-  myTest: response = {data: [{texts: [], topic: "blank topic"}], status: "undefined status"};
+  myTest: response = {data: [{texts: [], topic: "blank topic", average_sentiment: 0, average_sentiment_interpretation: "Neutral", average_tweet_length: 0}], status: "undefined status"};
   number_tweets: number = 0;
+  average_tweet_length: number = 0;
   selected_api_response?: api_response;
   averageSentiment: number | string = "No Data";
   averageSentimentInterpretation: string = "No Data";
@@ -60,8 +64,11 @@ export class HistoryComponent implements OnInit {
     this.selected_api_response= this_response;
     this.number_tweets = this_response['texts'].length;
     // console.log("number of tweets is " + this.number_tweets)
-    this.averageSentiment = this.getAverageSentimentScoreOfTweets(this_response,this.number_tweets);
-    this.averageSentimentInterpretation = this.getAverageSentimentScoreInterpretation(parseFloat(this.averageSentiment));
+    // this.averageSentiment = this.getAverageSentimentScoreOfTweets(this_response,this.number_tweets);
+    this.averageSentiment = this_response['average_sentiment'];
+    this.averageSentimentInterpretation = this_response['average_sentiment_interpretation'];
+    this.average_tweet_length= this_response['average_tweet_length'];
+    // this.averageSentimentInterpretation = this.getAverageSentimentScoreInterpretation(parseFloat(this.averageSentiment));
 
     if(this.index != 0){
       this.pie.data = this.selected_api_response;
@@ -110,6 +117,10 @@ export class HistoryComponent implements OnInit {
     else {
       return 'Error';
     }
+  }
+
+  public getAverageTweetLength(){
+
   }
 
   public getUid(): string | null{
