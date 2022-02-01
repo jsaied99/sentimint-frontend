@@ -34,3 +34,11 @@ body {
 p {
     font-size: 125%;
 }
+
+.aboutHeader{
+    text-decoration: underline;
+}
+
+.header{
+    text-decoration: underline;
+}
