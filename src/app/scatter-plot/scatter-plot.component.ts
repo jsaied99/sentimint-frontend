@@ -78,8 +78,8 @@ export class ScatterPlotComponent implements AfterViewInit {
             }
           },
           y: {
-            max: 1.1,
-            min: -1.1,
+            max: 101,
+            min: -101,
             title: {
               display: true,
               text: 'Sentiment Score',
@@ -88,7 +88,7 @@ export class ScatterPlotComponent implements AfterViewInit {
               }
             },
             ticks: {
-              stepSize: 0.05
+              stepSize: 5
             }
           }
         },

@@ -80,16 +80,16 @@ export class PieChartComponent implements AfterViewInit {
         for(let i = 0; i < this.data['texts'].length; i++){
           let score = this.data['texts'][i]['score'];
 
-          if(score >= 0.6){
+          if(score >= 60){
             sentimentGroupCounts[3]++;
           }
-          else if(score > 0.33 && score < 0.6){
+          else if(score > 33 && score < 60){
             sentimentGroupCounts[2]++;
           }
-          else if(score < -0.33){
+          else if(score < -33){
             sentimentGroupCounts[0]++;
           }
-          else if(score >= -0.33 && score <= 0.33){
+          else if(score >= -33 && score <= 33){
             sentimentGroupCounts[1]++;
           }
           else {

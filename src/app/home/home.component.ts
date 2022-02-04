@@ -30,6 +30,10 @@ export class HomeComponent implements OnInit {
 
   hashTagSearchValue: string | null = null;
 
+  averageLengthTweet: number = 0;
+  standardDeviation: number = 0;
+  average_tweet_length: number = 0;
+
   constructor(private api: BackendService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -73,7 +77,8 @@ export class HomeComponent implements OnInit {
             if(this.numberOfTweets > 0){
               this.averageSentiment = this.getAverageSentimentScoreOfTweets(this.rawData, this.numberOfTweets);
               this.averageSentimentInterpretation = this.getAverageSentimentScoreInterpretation(parseFloat(this.averageSentiment));
-
+              this.standardDeviation = this.rawData['std'];
+              this.average_tweet_length= this.rawData['average_tweet_length'];
               if(this.dataLoaded){
                 this.pie.pieChartBrowser();
                 this.scatter.addScatterChart();
@@ -131,16 +136,16 @@ export class HomeComponent implements OnInit {
 
   public getAverageSentimentScoreInterpretation(averageSentimentScore: number): string {
 
-    if(averageSentimentScore >= 0.6){
+    if(averageSentimentScore >= 60){
       return 'Positive';
     }
-    else if(averageSentimentScore > 0.33 && averageSentimentScore < 0.6){
+    else if(averageSentimentScore > 33 && averageSentimentScore < 60){
       return 'Somewhat Positive';
     }
-    else if(averageSentimentScore < -0.33){
+    else if(averageSentimentScore < -33){
       return 'Negative';
     }
-    else if(averageSentimentScore >= -0.33 && averageSentimentScore <= 0.33){
+    else if(averageSentimentScore >= -33 && averageSentimentScore <= 33){
       return 'Neutral';
     }
     else {
