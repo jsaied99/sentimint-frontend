@@ -53,11 +53,11 @@ export class HomeComponent implements OnInit {
       this.hashTagSearchValue = formValues.hashtag;
       let tweetsNum = formValues.tweetsNum;
 
-      if(tweetsNum % 10 != 0){
-        this.error = "Number of tweets must be multiple of 10";
-        this.loading = false;
-        return;
-      }
+      // if(tweetsNum % 10 != 0){
+      //   this.error = "Number of tweets must be multiple of 10";
+      //   this.loading = false;
+      //   return;
+      // }
 
       let uid: string | null = this.getUid();
       if(uid && this.hashTagSearchValue && tweetsNum){
