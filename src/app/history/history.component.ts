@@ -62,6 +62,7 @@ export class HistoryComponent implements OnInit {
 
 
     this.selected_api_response= this_response;
+    console.log(this.selected_api_response);
     this.number_tweets = this_response['texts'].length;
     // console.log("number of tweets is " + this.number_tweets)
     // this.averageSentiment = this.getAverageSentimentScoreOfTweets(this_response,this.number_tweets);

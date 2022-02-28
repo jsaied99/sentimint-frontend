@@ -18,7 +18,7 @@
         <div id="resultsGrid">
             <app-pie-chart id="chart" #pieChart [data]="selected_api_response" [hashtag]="selected_api_response['topic']"> </app-pie-chart>
             <app-scatter-plot id="chart" #scatterPlot [data]="selected_api_response" [hashtag]="selected_api_response['topic']"></app-scatter-plot>
-
+            
             <div id="hashtagData">
               <h1 id="hashtagDataHeader">{{ selected_api_response['topic'] }} Data</h1>
               <mat-list role="list">

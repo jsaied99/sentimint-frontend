@@ -5,7 +5,7 @@
     width: 15em;
 }
 .flex-container{
-  background-color: #669bbc !important;
+  /* background-color: #669bbc !important; */
 }
 .queryList li {
     cursor: pointer;
