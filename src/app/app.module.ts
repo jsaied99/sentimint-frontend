@@ -28,6 +28,7 @@ import { AboutComponent } from './about/about.component';
 import { HistoryComponent } from './history/history.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { ScatterPlotComponent } from './scatter-plot/scatter-plot.component';
+import { QueriesComponent } from './queries/queries.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +41,7 @@ import { ScatterPlotComponent } from './scatter-plot/scatter-plot.component';
     HistoryComponent,
     PieChartComponent,
     ScatterPlotComponent,
+    QueriesComponent,
   ],
   imports: [
     BrowserModule,

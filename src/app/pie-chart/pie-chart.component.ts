@@ -10,9 +10,14 @@ Chart.register(...registerables);
 export class PieChartComponent implements AfterViewInit {
 
   @ViewChild('pieCanvas') public pieCanvas!: ElementRef;
+  // @ViewChild('pieCanvas2') public pieCanvas2!: ElementRef;
 
   @Input() data!: any | undefined;
+  @Input() langsValues!: any | undefined;
+  @Input() langsLabels!: any | undefined;
   @Input() hashtag!: string | null;
+  @Input() lang_inter!: boolean | null;
+
 
 
   pieChart: any;
@@ -22,12 +27,20 @@ export class PieChartComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit(): void {
+    console.log("Pie Chart After View Init");
+    console.log(this.lang_inter);
+    if (this.lang_inter) {
+      this.pieChartLangs();
+    }else{
     this.pieChartBrowser();
+    }
   }
 
   pieChartBrowser(): void {
+    console.log("Pie Chart Browser");
 
     if(this.pieChart){
+      console.log("Destroying Pie Chart");
       this.pieChart.destroy();
     }
 
@@ -104,4 +117,64 @@ export class PieChartComponent implements AfterViewInit {
         return [];
       }
   }
+
+  pieChartLangs(): void {
+
+    if(this.pieChart){
+      this.pieChart.destroy();
+    }
+
+    const chartData = {
+      labels: this.langsLabels,
+      datasets: [{
+        // backgroundColor: [
+        //   '#ff0000',
+        //   '#559da4',
+        //   '#f1ff00',
+        //   '#00af03'
+        // ],
+        backgroundColor: [
+          // random color
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16),
+          '#' + Math.floor(Math.random() * 16777215).toString(16)          
+        ],
+        data: this.langsValues
+      }]
+    };
+
+    this.pieChart = new Chart(this.pieCanvas.nativeElement, {
+      type: 'pie',
+      data: chartData,
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: ['Tweets Grouped by Language'],
+            font: {
+              size: this.titleFontSize
+            }
+          },
+          legend: {
+            labels: {
+              // This more specific font property overrides the global property
+              font: {
+                size: this.legendFontSize
+              }
+            }
+          }
+        }
+      }
+    });
+    console.log("Pie Chart Langs");
+    console.log(this.pieChart);
+  }
+
 }

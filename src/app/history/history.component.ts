@@ -1,9 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { HistoryService } from '../services/history.service';
+import { QueriesService } from '../services/queries.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { getAuth } from "firebase/auth";
 import {PieChartComponent} from "../pie-chart/pie-chart.component";
 import {ScatterPlotComponent} from "../scatter-plot/scatter-plot.component";
+import {QueriesComponent} from "../queries/queries.component";
 
 export interface tweet_data{
   tweet: string,
@@ -17,11 +19,22 @@ export interface api_response{
   average_sentiment: number,
   average_sentiment_interpretation: string,
   average_tweet_length: number,
+  query_date: string,
+  lang_list: Record<string, number>
 }
 
 export interface response{
   data: api_response[],
   status: string
+}
+export interface topic{
+  topic: Record<string, topic_body>
+}
+
+export interface topic_body{
+  average_sentiment: Array<number>,
+  average_tweet_length: Array<number>,
+  query_dates: Array<Date>
 }
 
 @Component({
@@ -32,29 +45,41 @@ export interface response{
 export class HistoryComponent implements OnInit {
 
   @ViewChild('pieChart') pie!: PieChartComponent;
+  @ViewChild('pieChartLang') pieLang!: PieChartComponent;
   @ViewChild('scatterPlot') scatter!: ScatterPlotComponent;
+  @ViewChild('lineChart') line!: QueriesComponent;
 
 
   loading: boolean = true;
   index: number = 0;
   started = false;
-  myTest: response = {data: [{texts: [], topic: "blank topic", average_sentiment: 0, average_sentiment_interpretation: "Neutral", average_tweet_length: 0}], status: "undefined status"};
+  myTest: response = {data: [{texts: [], topic: "blank topic", average_sentiment: 0, average_sentiment_interpretation: "Neutral", average_tweet_length: 0, query_date: ' ', lang_list: {}}], status: "undefined status"};
   number_tweets: number = 0;
   average_tweet_length: number = 0;
   selected_api_response?: api_response;
+  topic_obj?: topic;
+  all_topics?: Array<topic> ;
   averageSentiment: number | string = "No Data";
   averageSentimentInterpretation: string = "No Data";
+  queryChart: boolean = false;
+  langsLabels?: Array<string>;
+  langsValues?: Array<number>;
   // otherTest: any = [];
-  constructor(private historyService: HistoryService, private http: HttpClient,) { }
+  constructor(private historyService: HistoryService, private http: HttpClient,
+    private queriesService: QueriesService) { }
 
   ngOnInit(): void {
-  //  get cookie for userId to be passed to getHistory
    let uid: string | null= this.getUid();
    this.historyService.getHistory(uid).subscribe(data => {
         this.myTest = data;
         this.started = true;
         this.loading = false;
+        this.queriesService.getAllTopics().subscribe(data => {
+          this.all_topics = data['data'];
+        });
+
     });
+   
 
   }
 
@@ -62,24 +87,44 @@ export class HistoryComponent implements OnInit {
 
 
     this.selected_api_response= this_response;
-    console.log(this.selected_api_response);
+    this.langsLabels = Object.keys(this_response['lang_list']);
+    this.langsValues = Object.values(this_response['lang_list']);
+
     this.number_tweets = this_response['texts'].length;
-    // console.log("number of tweets is " + this.number_tweets)
-    // this.averageSentiment = this.getAverageSentimentScoreOfTweets(this_response,this.number_tweets);
+    if (this.all_topics){
+      for(let i = 0; i < this.all_topics.length; i++){
+        let key = Object.keys(this.all_topics[i])[0];
+        if (key == this_response['topic']){
+          this.topic_obj = this.all_topics[i];
+        }
+      }
+    }
     this.averageSentiment = this_response['average_sentiment'];
     this.averageSentimentInterpretation = this_response['average_sentiment_interpretation'];
     this.average_tweet_length= this_response['average_tweet_length'];
-    // this.averageSentimentInterpretation = this.getAverageSentimentScoreInterpretation(parseFloat(this.averageSentiment));
 
     if(this.index != 0){
       this.pie.data = this.selected_api_response;
       this.pie.hashtag = this.selected_api_response['topic'];
+      this.pieLang.langsLabels = Object.keys(this.selected_api_response['lang_list']);
+      this.pieLang.langsValues = Object.values(this.selected_api_response['lang_list']);
+      
+      this.queriesService.getTopic(this.selected_api_response['topic']).subscribe(data => {
+        this.topic_obj = data;
+        this.line.data = this.topic_obj;
+        this.line.hashtag = data['topic'];
+        this.line.addScatterChart();
+        this.queryChart = true;
+      });
 
       this.scatter.data = this.selected_api_response;
       this.scatter.hashtag = this.selected_api_response['topic'];
       this.pie.pieChartBrowser();
+      this.pieLang.pieChartLangs();
       this.scatter.addScatterChart();
+  
     }
+
     this.index++;
   }
 

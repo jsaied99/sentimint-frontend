@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
 
           console.log(response);
 
-          if(response['success'] == 1){
+          if(response['status'] == 1){
 
             this.rawData = response['data'];;
 

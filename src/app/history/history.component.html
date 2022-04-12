@@ -5,7 +5,7 @@
             <li *ngFor="let query of this.myTest['data']"
                 [class.selected]="query === selected_api_response"
                 (click)="onSelect(query)">
-                <span>{{query['topic']}}</span>
+                <span>{{query['topic'] + " " +  query['query_date']}}</span>
             </li>
         </ul>
     </div>
@@ -16,8 +16,12 @@
     <div *ngIf="selected_api_response" class="content flex-child">
         <h1 class="center-text">Topic: {{selected_api_response['topic']}}</h1>
         <div id="resultsGrid">
-            <app-pie-chart id="chart" #pieChart [data]="selected_api_response" [hashtag]="selected_api_response['topic']"> </app-pie-chart>
-            <app-scatter-plot id="chart" #scatterPlot [data]="selected_api_response" [hashtag]="selected_api_response['topic']"></app-scatter-plot>
+            <app-pie-chart id="chart" #pieChart [data]="selected_api_response" [hashtag]="selected_api_response['topic']">
+            </app-pie-chart>
+            <!-- <app-scatter-plot id="chart" #scatterPlot [data]="selected_api_response" [hashtag]="selected_api_response['topic']"></app-scatter-plot> -->
+            <!-- <div *ngIf="queryChart"> -->
+              <app-queries id="chart" #lineChart [data]="topic_obj" [hashtag]="selected_api_response['topic']"></app-queries>
+            <!-- </div> -->
             
             <div id="hashtagData">
               <h1 id="hashtagDataHeader">{{ selected_api_response['topic'] }} Data</h1>
@@ -32,6 +36,21 @@
 
         <!-- <h1 class="center-text">Topic: {{selected_api_response['topic']}}</h1> -->
         <div fxLayout="row wrap">
+           <div fxFlex="70%">
+            <app-scatter-plot id="chart" #scatterPlot [data]="selected_api_response" [hashtag]="selected_api_response['topic']">
+            </app-scatter-plot>
+
+
+           </div>
+
+          <div fxFlex="30%" *ngIf="langsValues">
+          
+            <app-pie-chart id="chart" #pieChartLang [langsValues]="langsValues" [langsLabels]="langsLabels" [lang_inter]="true">
+            </app-pie-chart>
+          
+          </div>
+
+
             <div fxFlex="25%" *ngFor="let query of selected_api_response['texts']">
                 <mat-card class="data-card">
                     <mat-card-content>
