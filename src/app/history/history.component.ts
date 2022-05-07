@@ -20,7 +20,8 @@ export interface api_response{
   average_sentiment_interpretation: string,
   average_tweet_length: number,
   query_date: string,
-  lang_list: Record<string, number>
+  lang_list: Record<string, number>,
+  algorithm: string,
 }
 
 export interface response{
@@ -53,7 +54,7 @@ export class HistoryComponent implements OnInit {
   loading: boolean = true;
   index: number = 0;
   started = false;
-  myTest: response = {data: [{texts: [], topic: "blank topic", average_sentiment: 0, average_sentiment_interpretation: "Neutral", average_tweet_length: 0, query_date: ' ', lang_list: {}}], status: "undefined status"};
+  myTest: response = {data: [{texts: [], topic: "blank topic", algorithm: "vader", average_sentiment: 0, average_sentiment_interpretation: "Neutral", average_tweet_length: 0, query_date: ' ', lang_list: {}}], status: "undefined status"};
   number_tweets: number = 0;
   average_tweet_length: number = 0;
   selected_api_response?: api_response;

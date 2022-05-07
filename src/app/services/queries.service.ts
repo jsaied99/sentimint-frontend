@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
-let domainName = 'https://api.sentimint.jamals.me/';
+// let domainName = 'https://api.sentimint.jamals.me/';
+// let domainName = 'http://localhost:5001/';
+let domainName = 'https://api.v2.jamals.me/';
+
+// let domainName = 'https://api.sentimint.jamals.me:5000/';
+
 @Injectable({
   providedIn: 'root'
 })

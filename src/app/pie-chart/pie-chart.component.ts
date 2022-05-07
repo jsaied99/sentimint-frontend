@@ -47,6 +47,7 @@ export class PieChartComponent implements AfterViewInit {
     let values = this.getNumberOfTweetsInSentimentSegments();
 
     const chartData = {
+      // labels: ['Negative', 'Neutral', 'Positive'],
       labels: ['Negative', 'Neutral', 'Somewhat Positive', 'Positive'],
       datasets: [{
         backgroundColor: [

@@ -5,7 +5,7 @@
             <li *ngFor="let query of this.myTest['data']"
                 [class.selected]="query === selected_api_response"
                 (click)="onSelect(query)">
-                <span>{{query['topic'] + " " +  query['query_date']}}</span>
+                <span>{{query['topic'] + " " +  query['query_date'] + " " + query['algorithm']}}</span>
             </li>
         </ul>
     </div>

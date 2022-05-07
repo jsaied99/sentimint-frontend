@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit {
   loading: boolean = false;
   rawData!: any;
 
+  randomTopics = ['Bitcoin', 'Trump', 'Ukraine Russian War', 'Mizzou', 'Pizza Gate'];
+
   error: string | null = null;
 
   averageSentiment: number | string = "No Data";
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
   averageLengthTweet: number = 0;
   standardDeviation: number = 0;
   average_tweet_length: number = 0;
+  algorithm = 'vader';
 
   constructor(private api: BackendService, private fb: FormBuilder) { }
 
@@ -43,6 +46,21 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  public getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+
+  public exampleQuery(){
+
+    let hashtag_value = this.randomTopics[this.getRandomInt(0, this.randomTopics.length)];
+    this.hashtagSentimentForm.setValue({
+      hashtag: hashtag_value,
+      tweetsNum: 100
+    });
+    this.analyzeTweets();
+  }
   public analyzeTweets(){
 
     this.error = null;
@@ -64,7 +82,7 @@ export class HomeComponent implements OnInit {
 
         this.loading = true;
 
-        this.api.getSentimentAnalysis(uid, this.hashTagSearchValue, tweetsNum).subscribe((response: any) => {
+        this.api.getSentimentAnalysis(uid, this.hashTagSearchValue, tweetsNum, this.algorithm).subscribe((response: any) => {
 
           console.log(response);
 
@@ -92,7 +110,7 @@ export class HomeComponent implements OnInit {
             }
           }
           else {
-            this.error = "Server error";
+            this.error = "Server error or Invalid Search";
             this.loading = false;
           }
         });

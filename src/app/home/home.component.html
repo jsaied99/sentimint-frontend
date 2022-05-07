@@ -1,6 +1,6 @@
 <div class="center">
     <form id="form" [formGroup]="hashtagSentimentForm">
-      <label>Hashtag (#) to analyze </label>
+      <label>Topic to analyze </label>
       <mat-form-field appearance="fill" appearance="outline">
         <input type="text" matInput formControlName="hashtag">
       </mat-form-field>
@@ -8,6 +8,17 @@
       <mat-form-field id="numTweetsInput" appearance="fill" appearance="outline">
         <input type="number" matInput formControlName="tweetsNum" min="10" max="100" value="10">
       </mat-form-field>
+
+      <label>Algorithm to perform sentiment analysis</label>
+      <mat-form-field id="algorithmsInput" appearance="fill">
+        <mat-label>Select an algorithm</mat-label>
+        <mat-select [(value)]="algorithm">
+          <mat-option value="vader">VADER</mat-option>
+          <mat-option value="lr">Logistic Regression</mat-option>
+          <mat-option value="svm">SVM</mat-option>
+        </mat-select>
+      </mat-form-field>
+
     </form>
     <div id="buttons">
       <div id="errorTextBox">
@@ -15,6 +26,9 @@
       </div>
       <div id="buttonBox">
         <button mat-raised-button color="primary" (click)="analyzeTweets()">Analyze</button>
+      </div>
+      <div id="buttonBox_2">
+        <button mat-raised-button color="primary" (click)="exampleQuery()">Example Query</button>
       </div>
     </div>
     <div id="resultsGrid" *ngIf="dataLoaded">

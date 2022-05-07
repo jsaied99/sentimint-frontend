@@ -17,7 +17,24 @@
      -needs important tags
      - Background color is all adjusted here
 */
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: rgb(214, 131, 131);
+  border-radius: 28px !important;
+  /* background-color: white; */
+  /* border-color: #110d0d; */
+  box-shadow: 00px 0px 10px -2px #222222;
+  color: #110d0d !important;
+}
 
+.matselect-placeholder::mat-select-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(204, 0, 0);
+  opacity: 1;
+}
+::placeholder {
+    color: black;
+    font-size: medium;
+}
 ::ng-deep .mat-form-field-outline-start {
   border-radius: 28px 0 0 28px !important;
   min-width: 28px !important;
@@ -29,14 +46,26 @@
   background-color: white;
 }
 
-  ::ng-deep .mat-form-field-outline {
-    border-radius: 28px 28px 28px 28px !important;
-    background-color: #ffffff;
-    box-shadow: 00px 0px 10px -2px #222222;
-  }
-::placeholder {
-    color: black;
-    font-size: medium;
+::ng-deep .mat-form-field-outline {
+  border-radius: 28px 28px 28px 28px !important;
+  background-color: #412f2f;
+  box-shadow: 00px 0px 10px -2px #222222;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  /* opacity: 0.5 !important; */
+  /*click effect color change*/
+  background-color: blue !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: blue !important;
+  /*inner circle color change*/
+}
+
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: blue !important;
+  /*outer ring color change*/
 }
 
 
@@ -74,12 +103,21 @@ mat-form-field {
 #numTweetsInput {
   width: 20%;
 }
-
+#algorithmsInput {
+  width: 20%;
+}
 #buttonBox {
   grid-column-start: 3;
   grid-column-end: 4;
 }
-
+#buttonBox_2 {
+  grid-column-start: 4;
+  grid-column-end: 5;
+}
+#buttonBox_3 {
+  grid-column-start: 5;
+  grid-column-end: 6;
+}
 button {
   margin-left: 20px;
 }
