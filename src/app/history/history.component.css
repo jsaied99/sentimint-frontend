@@ -4,9 +4,7 @@
     padding: 0;
     width: 18em;
 }
-.flex-container{
-  /* background-color: #669bbc !important; */
-}
+
 .queryList li {
     cursor: pointer;
     position: relative;
@@ -36,6 +34,7 @@
   }
 
   .data-card {
+    display:flex;
     margin: 5px;
     max-width: 400px;
     height: 300px;
@@ -104,4 +103,8 @@
   position: absolute;
   left: 51%;
   top: 50vh;
+}
+
+.data-card-content {
+  overflow-y: scroll;
 }
