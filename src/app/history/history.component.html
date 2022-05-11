@@ -53,7 +53,7 @@
 
             <div fxFlex="25%" *ngFor="let query of selected_api_response['texts']">
                 <mat-card class="data-card">
-                    <mat-card-content>
+                    <mat-card-content class="data-card-content">
                         <p>Tweet: {{query['tweet']}}</p>
                         <h3>Sentiment Score: {{query['score']}}</h3>
                         <h3>Interpretation: {{query['interpretation']}}</h3>
